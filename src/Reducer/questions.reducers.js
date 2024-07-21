@@ -1,4 +1,3 @@
-const { act } = require("react");
 
 export const initialState = {
       questions: [],

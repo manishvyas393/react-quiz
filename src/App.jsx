@@ -1,5 +1,6 @@
 import "./App.css";
 import Header from "./components/Header";
+import StartScreen from "./components/StartScreen";
 import { useFetchQuestions } from "./CustomHooks/UseFetchQuestion";
 
 function App() {
@@ -12,7 +13,9 @@ function App() {
       ) : loading ? (
         <p>loading....</p>
       ) : (
-        <div>{questions?.length}</div>
+        <>
+          <StartScreen questions={questions?.length} />
+        </>
       )}
     </div>
   );
