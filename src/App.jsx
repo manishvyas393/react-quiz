@@ -7,6 +7,7 @@ import { useFetchQuestions } from "./CustomHooks/UseFetchQuestion";
 import { initialState, questionsReducer } from "./Reducer/questions.reducers";
 import Questions from "./components/Questions";
 import ProgressBar from "./components/ProgressBar";
+import EndPage from "./components/EndPage";
 
 function App() {
   const { questions, loading, error } = useFetchQuestions();
@@ -15,6 +16,7 @@ function App() {
     initialState
   );
   const [number, setNumber] = useState(0);
+  const lastReached = questions?.length === number + 1;
   const maxPoints =
     questions?.length && questions.reduce((cur, acc) => cur + acc.points, 0);
   return (
@@ -30,31 +32,41 @@ function App() {
         <>
           {status ? (
             <>
-              <ProgressBar
-                points={points}
-                maxPoints={maxPoints}
-                numQuestions={questions?.length}
-                index={number}
-              />
-              <Questions
-                question={questions?.length ? questions[number] : {}}
-                answer={answer}
-                dispatch={dispatch}
-                points={points}
-              />
-              <button
-                disabled={questions?.length === number + 1}
-                className="bg-violet-600 px-8 py-2 rounded-xl mt-8"
-                onClick={() => {
-                  dispatch({
-                    type: "answered",
-                    payload: { answered: null, points },
-                  });
-                  setNumber((num) => num + 1);
-                }}
+              {lastReached ? (
+                <EndPage
+                  maxPoints={maxPoints}
+                  score={points}
+                  dispatch={dispatch}
+                />
+              ) : (
+                <>
+                  <ProgressBar
+                    points={points}
+                    maxPoints={maxPoints}
+                    numQuestions={questions?.length}
+                    index={number}
+                  />
+                  <Questions
+                    question={questions?.length ? questions[number] : {}}
+                    answer={answer}
+                    dispatch={dispatch}
+                    points={points}
+                  />
+                  <button
+                    disabled={lastReached}
+                    className="bg-violet-600 px-8 py-2 rounded-xl md:mt-8 mt-4"
+                    onClick={() => {
+                      dispatch({
+                        type: "answered",
+                        payload: { answered: null, points },
+                      });
+                      setNumber((num) => num + 1);
+                    }}
                   >
                     Next Question
-              </button>
+                  </button>
+                </>
+              )}
             </>
           ) : (
             <>

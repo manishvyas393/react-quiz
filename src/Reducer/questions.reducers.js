@@ -34,6 +34,16 @@ export const questionsReducer = (state = initialState, action) => {
                         answer: action.payload.answered,
                         points: action.payload.points
                   }
+            case "reset":
+                  return {
+                        ...state,
+                        answer: null,
+                        points: 0,
+                        error: null,
+                        status: false,
+                        questions: [],
+                        loading:true,
+                  }
             default:
                   return state
       }
