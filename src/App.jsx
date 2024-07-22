@@ -36,7 +36,10 @@ function App() {
                 <EndPage
                   maxPoints={maxPoints}
                   score={points}
-                  dispatch={dispatch}
+                  dispatch={() => {
+                    setNumber(0);
+                    dispatch({ type: "reset" });
+                  }}
                 />
               ) : (
                 <>

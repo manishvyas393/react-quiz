@@ -10,7 +10,7 @@ const EndPage = ({ maxPoints, score, dispatch }) => {
 
       <button
         className="bg-violet-600 mt-8 py-2 px-4 rounded-xl text-white"
-        onClick={() => dispatch({ type: "reset" })}
+        onClick={dispatch}
       >
         Restart Quiz
       </button>

@@ -36,7 +36,6 @@ export const questionsReducer = (state = initialState, action) => {
                   }
             case "reset":
                   return {
-                        ...state,
                         answer: null,
                         points: 0,
                         error: null,
